@@ -61,7 +61,6 @@ To print the Wilber bond order analysis information, ensure that the `Multiwfn` 
 
 - Improve codebase cleanliness and organization.
 - Add functionality for Density of States (DOS) analysis.
-- Add functionality for multple file parsing internally, instead of relying on external shell loops
 - Rewrite using an existing parser like `cclib` in Python (but the `cclib` parsed object does not have all required attributes yet).
 
 ## Contributing
