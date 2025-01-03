@@ -283,7 +283,7 @@ if [ "$freq" = true ]; then
   START=0 
   END=4000
   NUMPTS=16000
-  /home/karet/Documents/Research/Msc/scripts/get_freq_gausssum/dist/get_freq $fullfile $START $END $NUMPTS
+  python get_freqs.py $fullfile $START $END $NUMPTS
 
 fi
 
