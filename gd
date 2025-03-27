@@ -125,6 +125,25 @@ fi
 
 # ================================================================================================================================
 for file in "$@"; do
+  # Check normal termination 
+  normalterm=$(tail -n 1 $file | awk '{print $1 $2}')
+  if [ "$normalterm" != "Normaltermination" ]; then
+    read -p "The termination is not normal. Do you want to proceed? (y/n): " choice
+    case "$choice" in
+        y|Y ) 
+            echo "Proceeding with the script..."
+            # Add the rest of your script here
+            ;;
+        n|N ) 
+            echo "Exiting the script."
+            exit 1
+            ;;
+        * ) 
+            echo "Invalid choice. Exiting."
+            exit 1
+            ;;
+    esac
+  fi
   # What all to be displayed stored as array
   display=()
   
@@ -164,15 +183,17 @@ for file in "$@"; do
     
     if (( $(echo "$alpha_homo > $beta_homo" | bc -l) )); then
     	HOMO=$alpha_homo
+      LUMO=$alpha_lumo
     else
     	HOMO=$beta_homo
-    fi
-    
-    if (( $(echo "$beta_lumo > $alpha_lumo" | bc -l) )); then
-    	LUMO=$alpha_lumo
-    else
     	LUMO=$beta_lumo
     fi
+    
+    # if (( $(echo "$beta_lumo > $alpha_lumo" | bc -l) )); then
+    # 	LUMO=$alpha_lumo
+    # else
+    # 	LUMO=$beta_lumo
+    # fi
   
     display+=("$HOMO")
     display+=("$LUMO")
@@ -287,7 +308,7 @@ for file in "$@"; do
   fi
   
   if [ "$bond_order" = true ]; then 
-    echo -e "9\n1\n" | Multiwfn $file
+    echo -e "9\n1\ny\n" | Multiwfn $file
   fi
   
   if [ "$bond_length" = true ]; then 
